@@ -1,7 +1,7 @@
 from grafo import grafo, insertarNodo, insertarArista\
     ,eliminarNodo,eliminarArista,modificarNodo\
     ,modificarArista,importarGrafo,exportarGrafo\
-    ,vecinosNodo,recorrerAncho
+    ,vecinosNodo,recorrerAncho,recorrerProfundidad
 
 A='A'
 B='B'
@@ -41,3 +41,4 @@ for k, v in grafo.items():
 
 """print(vecinosNodo("B"))"""
 print(recorrerAncho())
+print(recorrerProfundidad())
