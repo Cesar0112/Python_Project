@@ -125,9 +125,33 @@ def exportarGrafo(nombreArchivo:str,grafo: dict):
         archivo.write(linea)
     archivo.close()
 
-def recorrerProfundidad(grafo:dict) -> list:
-    """ Recorre el grafo en profundidad """
+def recorrerProfundidad() -> list:
+    """ Recorre el grafo a lo profundo """
     recorrido = []
+    pila=[]
+    ##TODO
+    nodoInicial=0
+
+    #se escoje el nodo inicial
+    for nodo in grafo.keys():
+        nodoInicial=nodo
+        if not (nodoInicial == None):
+            break
+
+
+    pila.append(nodoInicial)#primero agregar el nodo a la pila
+    #mientras la pila no este vacia
+    while len(pila) > 0:
+        ultimoNodoPila=pila.pop()
+        if ultimoNodoPila not in recorrido:
+            recorrido.append(ultimoNodoPila)#sacar el ultimo nodo de la pila y visitarlo
+        vecinos_nodo=vecinosNodo(ultimoNodoPila)
+        #agregar todos los vecinos no visitados a la pila
+        for vecino in vecinos_nodo:#recorre los vecinos
+            if vecino not in recorrido:#si el vecino no esta en el recorrido significa q no fue visitado
+                 pila.append(vecino)
+
+
     return recorrido
 
 
