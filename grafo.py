@@ -13,9 +13,9 @@ def insertarNodo(etiqueta: str) -> str:
     """#verificar si ya existe para poder introducirlo"""
     if etiqueta not in grafo:  # si el nodo existe(llave)
         grafo[etiqueta] = []
-        return "Nodo insertado con exito" #insertado con exito
+        return "Exito","Nodo insertado con exito" #insertado con exito
     else:
-        return "ERROR: Ese nodo ya existe en el grafo" #no insertado con exito
+        return "ERROR","Ese nodo ya existe en el grafo" #no insertado con exito
 
 def insertarArista(nodoInicial: str, nodoFinal: str, peso) -> str:
     """#verificar si existe una arista entre esos nodos con el mismo peso

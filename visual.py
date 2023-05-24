@@ -5,16 +5,13 @@ from tkinter import *
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 import networkx as nx
-
-
-grafo = {}
-
-
+from grafo import grafo as graf
+import grafo
 def insertarNodo():
     etiqueta = nodo_entry.get()
     if etiqueta:
-        if etiqueta not in grafo:
-            grafo[etiqueta] = []
+        if etiqueta not in graf:
+            grafo.insertarNodo(etiqueta)
             messagebox.showinfo("Éxito", "Nodo insertado correctamente.")
         else:
             messagebox.showerror("Error", "El nodo ya existe en el grafo.")
@@ -27,10 +24,10 @@ def insertarArista():
     nodoFinal = nodo_fin_entry.get()
     peso = peso_entry.get()
     if nodoInicial and nodoFinal and peso:
-        if nodoInicial in grafo and nodoFinal in grafo:
+        if nodoInicial in graf and nodoFinal in graf:
             arista = [nodoFinal, peso]
-            if arista not in grafo[nodoInicial]:
-                grafo[nodoInicial].append(arista)
+            if arista not in graf[nodoInicial]:
+                grafo.insertarArista(nodoInicial,nodoFinal,peso)
                 messagebox.showinfo("Éxito", "Arista insertada correctamente.")
             else:
                 messagebox.showerror("Error", "La arista ya existe en el grafo.")
@@ -42,7 +39,7 @@ def insertarArista():
 
 def visualizarGrafo():
     G = nx.DiGraph()
-    for nodo, aristas in grafo.items():
+    for nodo, aristas in graf.items():
         G.add_node(nodo)
         for arista in aristas:
             G.add_edge(nodo, arista[0], weight=arista[1])
@@ -52,6 +49,8 @@ def visualizarGrafo():
     nx.draw_networkx(G, pos, with_labels=True, node_size=500, node_color='lightblue', font_size=10)
     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
     plt.show()
+
+
 
 
 root = Tk()
