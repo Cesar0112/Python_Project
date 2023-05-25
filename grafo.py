@@ -209,3 +209,9 @@ def vecinosNodo(nodo:str)->list:
     else:
         print("ERROR:Ese nodo no esta en el grafo")
     return vecinos
+
+def getAristaPeso(nodoInicial:str, nodoFinal:str):
+    if nodoInicial in grafo and nodoFinal in grafo:
+        for arista in grafo[nodoInicial]:
+            if arista[0] == nodoFinal:#si existe la conexion
+                return arista[1]
