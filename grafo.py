@@ -158,7 +158,8 @@ def recorrerProfundidad() -> list:
     while len(pila) > 0:
         ultimoNodoPila=pila.pop()
         if ultimoNodoPila not in recorrido:
-            recorrido.append(ultimoNodoPila)#sacar el ultimo nodo de la pila y visitarlo
+            if isinstance(ultimoNodoPila, str) and ultimoNodoPila.isalpha():
+                recorrido.append(ultimoNodoPila)#sacar el ultimo nodo de la pila y visitarlo
         vecinos_nodo=vecinosNodo(ultimoNodoPila)
         #agregar todos los vecinos no visitados a la pila
         for vecino in vecinos_nodo:#recorre los vecinos
