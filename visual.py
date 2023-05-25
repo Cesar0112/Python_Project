@@ -3,6 +3,7 @@
 
 from tkinter import *
 from tkinter import messagebox
+from tkinter import filedialog
 import matplotlib.pyplot as plt
 import networkx as nx
 from grafo import grafo as graf
@@ -18,6 +19,27 @@ def insertarNodo():
     else:
         messagebox.showerror("Error", "Ingrese una etiqueta para el nodo.")
 
+def eliminarNodo():
+
+    etiqueta = nodo_entry.get()
+    if etiqueta in graf:
+        grafo.eliminarNodo(etiqueta)
+
+        messagebox.showinfo("Exito","Nodo eliminado correctamente")
+    else:
+        messagebox.showerror("ERROR","No existe el nodo indicado")
+
+def modificarNodo():
+    etiquetaActual=nodo_entry.get()
+    etiquetaNueva = nodo_entry_nueva.get()
+    if etiquetaActual in graf:#si existe el nodo entonces se puede modificar
+        if etiquetaNueva not in graf:#si no existe la etiqueta nueva en el grafo entonces se puede modificar para evitar repeticion de nodos
+            grafo.modificarNodo(etiquetaActual,etiquetaNueva)
+            messagebox.showinfo("Exito","Nodo modificado")
+        else:
+            messagebox.showerror("ERROR","Ya existe ese nodo en el grafo")
+    else:
+        messagebox.showerror("ERROR","No existe el nodo a modificar, en el grafo")
 
 def insertarArista():
     nodoInicial = nodo_ini_entry.get()
@@ -77,10 +99,45 @@ def modificarArista():
     else:
         messagebox.showerror("ERROR", "No existe arista con el nodo inicial indicado")
 
+def eliminarArista():
+    nodoInicial = nodo_ini_entry.get()
+    nodoFinal = nodo_fin_entry.get()
+    peso = grafo.getAristaPeso(nodoInicial, nodoFinal)
+    if (nodoInicial in graf) and (nodoFinal in graf):
+        if [nodoFinal, peso] in graf[nodoInicial]: #si encuentra la conexion al nodo final desde el inicial con el mismo peso
+            grafo.eliminarArista(nodoInicial,nodoFinal,peso)
+            messagebox.showinfo("Exito","Eliminación exitosa")
+        else:
+            messagebox.showerror("ERROR","No existe esa arista")
+    else:
+        messagebox.showerror("ERROR","No existe esa arista entre los nodos indicados")
+
+def importarGrafo():
+    nombreArchivo = filedialog.askopenfilename(initialdir="/",title="Seleccionar archivo",filetypes=(("Archivos de texto", "*.txt*"),("Todos los archivos", "*.*")))
+    if nombreArchivo is not None and nombreArchivo != "":
+        grafo.importarGrafo(nombreArchivo)
+        messagebox.showinfo("Exito","Grafo importado correctamente")
+def exportarGrafo():
+    nombreArchivo = filedialog.asksaveasfilename(initialdir="/",
+                                           defaultextension=".txt",
+                                           filetypes=(("Archivos de texto", "*.txt*"),
+                                                      ("Todos los archivos", "*.*")))
+    if nombreArchivo is not None and nombreArchivo != "":
+        grafo.exportarGrafo(nombreArchivo,graf)
+        messagebox.showinfo("Exito","Grafo exportado correctamente")
+
 
 root = Tk()
 root.title("Grafo Dirigido Ponderado")
-root.geometry("400x300")
+root.geometry("400x400")
+
+#boton importar grafo
+importar_grafo_btn = Button(root,text="Importar Grafo",command=importarGrafo)
+importar_grafo_btn.pack()
+
+#boton exportar grafo
+exportar_grafo_btn = Button(root,text="Exportar Grafo",command=exportarGrafo)
+exportar_grafo_btn.pack()
 
 # Etiqueta y entrada para insertar nodo
 nodo_label = Label(root, text="Etiqueta del Nodo:")
@@ -88,8 +145,21 @@ nodo_label.pack()
 nodo_entry = Entry(root)
 nodo_entry.pack()
 
+#boton insertar
 insertar_nodo_btn = Button(root, text="Insertar Nodo", command=insertarNodo)
 insertar_nodo_btn.pack()
+
+eliminar_nodo_btn = Button(root, text = "Eliminar Nodo",command=eliminarNodo)
+eliminar_nodo_btn.pack()
+# Etiqueta y entrada para el nuevo nodo
+nodo_label_nueva = Label(root, text="Etiqueta Nueva del Nodo:")
+nodo_label_nueva.pack()
+nodo_entry_nueva = Entry(root)
+nodo_entry_nueva.pack()
+
+#boton modificar creado e insertado
+modificar_nodo_btn = Button(root,text="Modificar Nodo",command=modificarNodo)
+modificar_nodo_btn.pack()
 
 # Etiquetas y entradas para insertar arista
 nodo_ini_label = Label(root, text="Nodo Inicial:")
@@ -112,6 +182,10 @@ insertar_arista_btn.pack()
 
 modificar_arista_btn = Button(root, text="Modificar Arista",command=modificarArista)
 modificar_arista_btn.pack()
+
+eliminar_arista_btn = Button(root,text="Eliminar Arista",command=eliminarArista)
+eliminar_arista_btn.pack()
+
 
 # Botón para visualizar el grafo
 visualizar_btn = Button(root, text="Visualizar Grafo", command=visualizarGrafo)

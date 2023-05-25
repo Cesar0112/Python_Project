@@ -49,7 +49,7 @@ def eliminarNodo(etiqueta: str) -> str:
                 if etiqueta in lista[0]:#si encuentra la etiqueta en la parte de etiqueta de la lista eliminalo
                     listaDeListas.remove(lista)#elimina la lista que contiene la etiqueta del nodo
 
-        return "Nodo "+nodoEliminado+" eliminado correctamente"
+        return "Nodo eliminado correctamente"
     else:
         return "ERROR: No existe el nodo indicado"
 
