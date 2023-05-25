@@ -173,7 +173,6 @@ def recorrerAncho() -> list:
     """ Recorre el grafo a lo ancho """
     recorrido = []
     cola=[]
-    nodoInicial=0
 
     #se escoje el nodo inicial
     for nodo in grafo.keys():
@@ -187,7 +186,8 @@ def recorrerAncho() -> list:
     while len(cola) > 0:
         primerNodoCola=cola.pop(0)
         if primerNodoCola not in recorrido:
-            recorrido.append(primerNodoCola)#sacar el primer nodo de la cola y visitarlo
+            if isinstance(primerNodoCola, str) and primerNodoCola.isalpha():
+                recorrido.append(primerNodoCola)#sacar el primer nodo de la cola y visitarlo
         vecinos_nodo=vecinosNodo(primerNodoCola)
         #agregar todos los vecinos no visitados a la cola
         for vecino in vecinos_nodo:#recorre los vecinos
@@ -206,8 +206,7 @@ def vecinosNodo(nodo:str)->list:
                 nodoVecino=arista[0]
                 if (nodoVecino not in vecinos) and  not (nodoVecino == nodo):#si no esta dentro de los vecinos y no es el propio nodo
                     vecinos.append(nodoVecino)#agrega la parte de la etiqueta a los vecinos
-    else:
-        print("ERROR:Ese nodo no esta en el grafo")
+
     return vecinos
 
 def getAristaPeso(nodoInicial:str, nodoFinal:str):
