@@ -132,7 +132,7 @@ def exportarGrafo():
 
 def dibujarCirculos(nombres):
     ventana = tk.Tk()
-    ventana.title("Recorrido a lo ancho")
+    ventana.title("Recorrido")
     while("" in nombres):
         nombres.remove("")
     # Dimensiones del canvas
